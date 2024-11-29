@@ -1,19 +1,18 @@
 import { LoadingContext } from "contexts/loadingContext";
+import { PlayContext } from "contexts/playContext";
 import { useCallback, useContext, useState } from "react";
 import { Elements } from "types/elements";
-import { PlayingResult } from "types/playing";
 
 const usePlaying = () => {
-  const [score, setScore] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [result, setResult] = useState<PlayingResult | undefined>();
   const { setLoading } = useContext(LoadingContext);
-  const [machineSelectedElement, setMachineSelectedElement] = useState<
-    Elements | undefined
-  >();
-  const [selectedElement, setSelectedElement] = useState<
-    Elements | undefined
-  >();
+  const {
+    setPlayerOneElement,
+    setPlayerTwoElement,
+    setResult,
+    setScore,
+    score,
+  } = useContext(PlayContext);
 
   const checkWinner = useCallback(
     (playerOneElement: Elements, playerTwoElement: Elements) => {
@@ -54,35 +53,33 @@ const usePlaying = () => {
         setLoading(false);
       }, 1000);
     },
-    []
+    [checkWinner, score, setLoading, setResult, setScore]
   );
 
-  const selectElement = (element: Elements) => {
-    setLoading(true);
-    setIsPlaying(true);
-    setSelectedElement(element);
-    const elementsToSelected: Elements[] = ["paper", "rock", "scizor"];
-    const botSelectedElement =
-      elementsToSelected[Math.floor(Math.random() * 3)];
-    setMachineSelectedElement(botSelectedElement);
-
-    playGame(element, botSelectedElement);
-  };
+  const selectElement = useCallback(
+    (element: Elements) => {
+      const elementsToSelected: Elements[] = ["paper", "rock", "scizor"];
+      const botElement = elementsToSelected[Math.floor(Math.random() * 3)];
+      setLoading(true);
+      setIsPlaying(true);
+      setPlayerOneElement(element);
+      setPlayerTwoElement(botElement);
+      playGame(element, botElement);
+    },
+    [playGame, setLoading, setPlayerOneElement, setPlayerTwoElement]
+  );
 
   const clearResult = () => {
     setResult(undefined);
-    setMachineSelectedElement(undefined);
+    setPlayerOneElement(undefined);
+    setPlayerTwoElement(undefined);
     setIsPlaying(false);
   };
 
   return {
     selectElement,
-    result,
     clearResult,
     isPlaying,
-    machineSelectedElement,
-    selectedElement,
-    score,
   };
 };
 
