@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Flex, Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 
 type WrapperProps = {
   children: ReactNode;
