@@ -1,8 +1,8 @@
 import { Spacer, Stack } from "@chakra-ui/react";
-import { ElementsSelect } from "components/ElementsSelect";
-import { PlayingDetails } from "components/PlayingDetails";
-import { Score } from "components/Score";
 import { usePlaying } from "hooks/usePlaying";
+import { ElementsSelect } from "./components/ElementsSelect";
+import { PlayingDetails } from "./components/PlayingDetails";
+import { Score } from "./components/Score";
 
 export const PlayBoard = () => {
   const { isPlaying, selectElement, clearResult } = usePlaying();

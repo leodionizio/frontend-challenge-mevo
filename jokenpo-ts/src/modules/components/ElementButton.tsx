@@ -4,7 +4,7 @@ import ScizorImage from "assets/scizor.svg";
 import PaperImage from "assets/paper.svg";
 import NoElementImage from "assets/no-element.svg";
 import { Elements } from "types/elements";
-import { Button } from "./ui/button";
+import { Button } from "components/ui/button";
 
 type ElementButtonProps = {
   element?: Elements;

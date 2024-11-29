@@ -3,7 +3,7 @@ import { Flex, Stack, Text } from "@chakra-ui/react";
 import { LoadingContext } from "contexts/loadingContext";
 import { PlayContext } from "contexts/playContext";
 import { ElementButton } from "./ElementButton";
-import { Button } from "./ui/button";
+import { Button } from "components/ui/button";
 
 type PlayingDetailsProps = {
   onPlayAgain: () => void;
