@@ -1,6 +1,6 @@
-import { Elements } from "@/types/elements";
-import { PlayingResult } from "@/types/playing";
 import { useState } from "react";
+import { Elements } from "types/elements";
+import { PlayingResult } from "types/playing";
 
 const usePlaying = () => {
   const [score, setScore] = useState(0);

@@ -1,9 +1,9 @@
-import { Flex, Stack, Text } from "@chakra-ui/react";
-import { Button } from "./ui/button";
-import { ElementButton } from "./element-button";
-import { PlayingResult } from "@/types/playing";
 import { useMemo } from "react";
-import { Elements } from "@/types/elements";
+import { Flex, Stack, Text } from "@chakra-ui/react";
+import { PlayingResult } from "types/playing";
+import { Elements } from "types/elements";
+import { ElementButton } from "./ElementButton";
+import { Button } from "./ui/button";
 
 type PlayingDetailsProps = {
   onPlayAgain: () => void;

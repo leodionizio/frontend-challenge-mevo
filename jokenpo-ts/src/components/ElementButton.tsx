@@ -1,10 +1,10 @@
-import RockImage from "../assets/rock.svg";
-import ScizorImage from "../assets/scizor.svg";
-import PaperImage from "../assets/paper.svg";
-import NoElementImage from "../assets/no-element.svg";
-import { Elements } from "../types/elements";
+import { useMemo } from "react";
+import RockImage from "assets/rock.svg";
+import ScizorImage from "assets/scizor.svg";
+import PaperImage from "assets/paper.svg";
+import NoElementImage from "assets/no-element.svg";
+import { Elements } from "types/elements";
 import { Button } from "./ui/button";
-import { useCallback, useMemo } from "react";
 
 type ElementButtonProps = {
   element?: Elements;
