@@ -7,7 +7,6 @@ import { usePlaying } from "hooks/usePlaying";
 export const PlayBoard = () => {
   const {
     result,
-    loading,
     isPlaying,
     selectElement,
     machineSelectedElement,
@@ -22,12 +21,11 @@ export const PlayBoard = () => {
       <Spacer marginY={8} />
 
       <Stack paddingX={4} width="full">
-        {!isPlaying && !loading ? (
+        {!isPlaying ? (
           <ElementsSelect selectElement={selectElement} />
         ) : (
           <PlayingDetails
             result={result}
-            loading={loading}
             selectedElement={selectedElement}
             machineSelectedElement={machineSelectedElement}
             onPlayAgain={clearResult}

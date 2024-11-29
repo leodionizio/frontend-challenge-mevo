@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { LoadingContext } from "contexts/loadingContext";
+import { useCallback, useContext, useState } from "react";
 import { Elements } from "types/elements";
 import { PlayingResult } from "types/playing";
 
@@ -6,13 +7,55 @@ const usePlaying = () => {
   const [score, setScore] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [result, setResult] = useState<PlayingResult | undefined>();
-  const [loading, setLoading] = useState(false);
+  const { setLoading } = useContext(LoadingContext);
   const [machineSelectedElement, setMachineSelectedElement] = useState<
     Elements | undefined
   >();
   const [selectedElement, setSelectedElement] = useState<
     Elements | undefined
   >();
+
+  const checkWinner = useCallback(
+    (playerOneElement: Elements, playerTwoElement: Elements) => {
+      if (
+        (playerOneElement === "paper" && playerTwoElement === "rock") ||
+        (playerOneElement === "rock" && playerTwoElement === "scizor") ||
+        (playerOneElement === "scizor" && playerTwoElement === "paper")
+      ) {
+        return playerOneElement;
+      }
+
+      if (
+        (playerOneElement === "paper" && playerTwoElement === "scizor") ||
+        (playerOneElement === "rock" && playerTwoElement === "paper") ||
+        (playerOneElement === "scizor" && playerTwoElement === "rock")
+      ) {
+        return playerTwoElement;
+      }
+
+      return "draw" as Elements;
+    },
+    []
+  );
+
+  const playGame = useCallback(
+    (userElement: Elements, botElement: Elements) => {
+      const winner = checkWinner(userElement, botElement);
+
+      setTimeout(() => {
+        if (winner === userElement) {
+          setResult("win");
+          setScore(score + 1);
+        } else if (winner === botElement) {
+          setResult("lose");
+        } else {
+          setResult("draw");
+        }
+        setLoading(false);
+      }, 1000);
+    },
+    []
+  );
 
   const selectElement = (element: Elements) => {
     setLoading(true);
@@ -23,39 +66,7 @@ const usePlaying = () => {
       elementsToSelected[Math.floor(Math.random() * 3)];
     setMachineSelectedElement(botSelectedElement);
 
-    if (
-      (element === "paper" && botSelectedElement === "rock") ||
-      (element === "rock" && botSelectedElement === "scizor") ||
-      (element === "scizor" && botSelectedElement === "paper")
-    ) {
-      setTimeout(() => {
-        setResult("win");
-        setLoading(false);
-        setScore(score + 1);
-      }, 1000);
-    }
-
-    if (
-      (element === "paper" && botSelectedElement === "paper") ||
-      (element === "rock" && botSelectedElement === "rock") ||
-      (element === "scizor" && botSelectedElement === "scizor")
-    ) {
-      setTimeout(() => {
-        setResult("draw");
-        setLoading(false);
-      }, 1000);
-    }
-
-    if (
-      (element === "paper" && botSelectedElement === "scizor") ||
-      (element === "rock" && botSelectedElement === "paper") ||
-      (element === "scizor" && botSelectedElement === "rock")
-    ) {
-      setTimeout(() => {
-        setLoading(false);
-        setResult("lose");
-      }, 1000);
-    }
+    playGame(element, botSelectedElement);
   };
 
   const clearResult = () => {
@@ -68,7 +79,6 @@ const usePlaying = () => {
     selectElement,
     result,
     clearResult,
-    loading,
     isPlaying,
     machineSelectedElement,
     selectedElement,

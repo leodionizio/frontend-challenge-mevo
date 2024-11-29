@@ -1,25 +1,26 @@
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { Flex, Stack, Text } from "@chakra-ui/react";
 import { PlayingResult } from "types/playing";
 import { Elements } from "types/elements";
 import { ElementButton } from "./ElementButton";
 import { Button } from "./ui/button";
+import { LoadingContext } from "contexts/loadingContext";
 
 type PlayingDetailsProps = {
   onPlayAgain: () => void;
   result?: PlayingResult;
-  loading?: boolean;
   selectedElement?: Elements;
   machineSelectedElement?: Elements;
 };
 
 export const PlayingDetails = ({
   result,
-  loading,
   selectedElement,
   machineSelectedElement,
   onPlayAgain,
 }: PlayingDetailsProps) => {
+  const { loading } = useContext(LoadingContext);
+  
   const resultText = useMemo(() => {
     if (result === "win") return "You win!";
     if (result === "lose") return "You loose!";
