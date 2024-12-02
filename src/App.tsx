@@ -1,4 +1,4 @@
-import { Provider } from "./components/ui/provider";
+import { Provider as ThemeProvider } from "./components/ui/provider";
 import { Wrapper } from "./components/layout/Wrapper";
 import { PlayBoard } from "./modules/PlayBoard";
 import { LoadingProvider } from "contexts/loadingContext";
@@ -6,7 +6,7 @@ import { PlayProvider } from "contexts/playContext";
 
 function App() {
   return (
-    <Provider>
+    <ThemeProvider>
       <div className="App">
         <LoadingProvider>
           <PlayProvider>
@@ -16,7 +16,7 @@ function App() {
           </PlayProvider>
         </LoadingProvider>
       </div>
-    </Provider>
+    </ThemeProvider>
   );
 }
 
