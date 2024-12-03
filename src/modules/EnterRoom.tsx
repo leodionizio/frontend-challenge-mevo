@@ -22,9 +22,9 @@ export const EnterRoom = () => {
       <Field label="Room ID">
         <Input
           placeholder="4456"
-          value={roomPlayer?.aliasName}
+          value={roomPlayer?.roomId}
           onChange={(e) =>
-            setRoomPlayer({ ...roomPlayer, aliasName: e.target.value })
+            setRoomPlayer({ ...roomPlayer, roomId: e.target.value })
           }
         />
       </Field>
@@ -32,9 +32,9 @@ export const EnterRoom = () => {
       <Field label="Your Name">
         <Input
           placeholder="Jhon Snow"
-          value={roomPlayer?.roomId}
+          value={roomPlayer?.aliasName}
           onChange={(e) =>
-            setRoomPlayer({ ...roomPlayer, roomId: e.target.value })
+            setRoomPlayer({ ...roomPlayer, aliasName: e.target.value })
           }
         />
       </Field>
