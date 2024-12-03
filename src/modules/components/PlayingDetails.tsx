@@ -4,6 +4,7 @@ import { LoadingContext } from "contexts/loadingContext";
 import { PlayContext } from "contexts/playContext";
 import { ElementButton } from "./ElementButton";
 import { Button } from "components/ui/button";
+import { MeContext } from "contexts/meContext";
 
 type PlayingDetailsProps = {
   onPlayAgain: () => void;
@@ -11,43 +12,52 @@ type PlayingDetailsProps = {
 
 export const PlayingDetails = ({ onPlayAgain }: PlayingDetailsProps) => {
   const { loading } = useContext(LoadingContext);
-  const { result, playerOneElement, playerTwoElement } =
-    useContext(PlayContext);
+  const { result, players, gameState } = useContext(PlayContext);
+  const { isMe } = useContext(MeContext);
 
   const resultText = useMemo(() => {
-    if (result === "win") return "You win!";
-    if (result === "lose") return "You loose!";
+    const playerName = result?.split(" ")[0];
+    if (playerName && isMe(playerName)) return "You win!";
+    if (playerName && !isMe(playerName)) return "You loose!";
     return "Draw!";
   }, [result]);
 
   const resultTextColor = useMemo(() => {
-    if (result === "win") return "green";
-    if (result === "lose") return "red";
+    if (resultText.includes("win")) return "green";
+    if (resultText.includes("loose")) return "red";
     return "yellow";
-  }, [result]);
+  }, [resultText]);
 
   return (
     <Stack textAlign="center" gap={4} width="full">
       <Flex gap={6} justifyContent="space-between">
-        <ElementButton element={playerOneElement} onSelect={() => {}} />
-        <ElementButton
-          element={!loading ? playerTwoElement : undefined}
-          onSelect={() => {}}
-        />
+        {players?.map((player) => (
+          <ElementButton
+            key={`element-button-${player.element}`}
+            element={player.element}
+            onSelect={() => {}}
+          />
+        ))}
       </Flex>
 
       <Text textTransform="uppercase" fontWeight="semibold" fontSize={26}>
         {loading ? (
           <>
-            Machine is
-            <br /> choosing...
+            Waiting
+            <br /> all players play...
           </>
         ) : (
-          <>Machine selected {playerTwoElement}</>
+          <>
+            {players?.map((player) => (
+              <span key={player.id}>
+                {player.name} played {player.element}
+              </span>
+            ))}
+          </>
         )}
       </Text>
 
-      {!loading && (
+      {gameState === "gameOver" && (
         <Stack textAlign="center">
           <Text
             textTransform="uppercase"

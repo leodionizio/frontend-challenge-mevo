@@ -3,18 +3,18 @@ import { Elements } from "types/elements";
 import { ElementButton } from "./ElementButton";
 
 type ElementsSelectProps = {
-  selectElement: (element: Elements) => void;
+  play: (element: Elements) => void;
 };
 
-export const ElementsSelect = ({ selectElement }: ElementsSelectProps) => {
+export const ElementsSelect = ({ play }: ElementsSelectProps) => {
   return (
     <>
       <Flex justifyContent="space-between">
-        <ElementButton element="rock" onSelect={selectElement} />
-        <ElementButton element="paper" onSelect={selectElement} />
+        <ElementButton element="rock" onSelect={play} />
+        <ElementButton element="paper" onSelect={play} />
       </Flex>
       <Flex justifyContent="center">
-        <ElementButton element="scizor" onSelect={selectElement} />
+        <ElementButton element="scizor" onSelect={play} />
       </Flex>
     </>
   );

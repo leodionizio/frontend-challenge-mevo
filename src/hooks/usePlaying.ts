@@ -1,85 +1,64 @@
 import { LoadingContext } from "contexts/loadingContext";
 import { PlayContext } from "contexts/playContext";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Elements } from "types/elements";
+import { io } from "socket.io-client";
+import { useNavigate } from "react-router";
+import { MeContext } from "contexts/meContext";
+
+const socket = io("http://localhost:3001");
 
 const usePlaying = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const navigate = useNavigate();
   const { setLoading } = useContext(LoadingContext);
-  const {
-    setPlayerOneElement,
-    setPlayerTwoElement,
-    setResult,
-    setScore,
-    score,
-  } = useContext(PlayContext);
+  const { setMe } = useContext(MeContext);
+  const { setResult, roomId, setRoomId, setPlayers, setGameState } =
+    useContext(PlayContext);
 
-  const checkWinner = useCallback(
-    (playerOneElement: Elements, playerTwoElement: Elements) => {
-      if (
-        (playerOneElement === "paper" && playerTwoElement === "rock") ||
-        (playerOneElement === "rock" && playerTwoElement === "scizor") ||
-        (playerOneElement === "scizor" && playerTwoElement === "paper")
-      ) {
-        return playerOneElement;
-      }
+  const handleChangeState = useCallback((room: any) => {
+    setPlayers(room.players);
+  }, []);
 
-      if (
-        (playerOneElement === "paper" && playerTwoElement === "scizor") ||
-        (playerOneElement === "rock" && playerTwoElement === "paper") ||
-        (playerOneElement === "scizor" && playerTwoElement === "rock")
-      ) {
-        return playerTwoElement;
-      }
+  const handleStartGame = useCallback(() => {
+    setGameState("playing");
+  }, []);
 
-      return "draw" as Elements;
-    },
-    []
-  );
+  const handleGameOver = useCallback((playData: any) => {
+    setGameState("gameOver");
+    setResult(playData.result);
+    setPlayers(playData.elements);
+    setLoading(false);
+  }, []);
 
-  const playGame = useCallback(
-    (userElement: Elements, botElement: Elements) => {
-      const winner = checkWinner(userElement, botElement);
+  useEffect(() => {
+    socket.on("roomState", handleChangeState);
+    socket.on("startGame", handleStartGame);
+    socket.on("gameOver", handleGameOver);
+  }, []);
 
-      setTimeout(() => {
-        if (winner === userElement) {
-          setResult("win");
-          setScore(score + 1);
-        } else if (winner === botElement) {
-          setResult("lose");
-        } else {
-          setResult("draw");
-        }
-        setLoading(false);
-      }, 1000);
-    },
-    [checkWinner, score, setLoading, setResult, setScore]
-  );
+  const joinRoom = ({ roomId, aliasName }: any) => {
+    setRoomId(roomId);
+    setMe(aliasName);
+    socket.emit("joinRoom", { roomId, player: aliasName });
+    navigate("/playing");
+  };
 
-  const selectElement = useCallback(
-    (element: Elements) => {
-      const elementsToSelected: Elements[] = ["paper", "rock", "scizor"];
-      const botElement = elementsToSelected[Math.floor(Math.random() * 3)];
-      setLoading(true);
-      setIsPlaying(true);
-      setPlayerOneElement(element);
-      setPlayerTwoElement(botElement);
-      playGame(element, botElement);
-    },
-    [playGame, setLoading, setPlayerOneElement, setPlayerTwoElement]
-  );
+  const play = (element: Elements) => {
+    setLoading(true);
+    socket.emit("play", { roomId, element });
+  };
 
   const clearResult = () => {
     setResult(undefined);
-    setPlayerOneElement(undefined);
-    setPlayerTwoElement(undefined);
-    setIsPlaying(false);
+    setGameState("playing");
+    setLoading(false);
+    socket.emit("resetGame", { roomId });
   };
 
   return {
-    selectElement,
     clearResult,
-    isPlaying,
+    joinRoom,
+    play,
   };
 };
 

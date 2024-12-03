@@ -3,47 +3,56 @@ import { CustomContextProviderProps } from "types/contextProviders";
 import { Elements } from "types/elements";
 import { PlayingResult } from "types/playing";
 
-export type PlayContextType = {
+export type Player = {
+  id: string;
+  name: string;
+  element?: Elements;
   score: number;
-  setScore: Dispatch<SetStateAction<number>>;
-  result: PlayingResult | undefined;
-  setResult: Dispatch<SetStateAction<PlayingResult | undefined>>;
-  playerOneElement: Elements | undefined;
-  setPlayerOneElement: Dispatch<SetStateAction<Elements | undefined>>;
-  playerTwoElement: Elements | undefined;
-  setPlayerTwoElement: Dispatch<SetStateAction<Elements | undefined>>;
+};
+
+export type GameState = "waiting" | "playing" | "gameOver";
+
+export type PlayContextType = {
+  result: string | undefined;
+  setResult: Dispatch<SetStateAction<string | undefined>>;
+  players: Player[];
+  setPlayers: Dispatch<SetStateAction<Player[]>>;
+  roomId?: string;
+  setRoomId: Dispatch<SetStateAction<string | undefined>>;
+  gameState: GameState;
+  setGameState: Dispatch<SetStateAction<GameState>>;
 };
 
 export const defaultContextValue: PlayContextType = {
-  score: 0,
-  setScore: () => {},
   result: undefined,
   setResult: () => {},
-  playerOneElement: undefined,
-  setPlayerOneElement: () => {},
-  playerTwoElement: undefined,
-  setPlayerTwoElement: () => {},
+  players: [],
+  setPlayers: () => [],
+  roomId: undefined,
+  setRoomId: () => undefined,
+  gameState: "waiting",
+  setGameState: () => {},
 };
 
 const PlayContext = createContext(defaultContextValue);
 
 const PlayProvider = ({ children }: CustomContextProviderProps) => {
-  const [score, setScore] = useState(0);
-  const [result, setResult] = useState<PlayingResult>();
-  const [playerOneElement, setPlayerOneElement] = useState<Elements>();
-  const [playerTwoElement, setPlayerTwoElement] = useState<Elements>();
+  const [result, setResult] = useState<string>();
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [roomId, setRoomId] = useState<string | undefined>();
+  const [gameState, setGameState] = useState<GameState>("waiting");
 
   return (
     <PlayContext.Provider
       value={{
-        score,
-        setScore,
         result,
         setResult,
-        playerOneElement,
-        setPlayerOneElement,
-        playerTwoElement,
-        setPlayerTwoElement,
+        players,
+        setPlayers,
+        roomId,
+        setRoomId,
+        gameState,
+        setGameState,
       }}
     >
       {children}
