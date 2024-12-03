@@ -1,5 +1,6 @@
-import { Stack } from "@chakra-ui/react";
+import { Heading, Input, Stack, Text } from "@chakra-ui/react";
 import { Button } from "components/ui/button";
+import { Field } from "components/ui/field";
 import { usePlaying } from "hooks/usePlaying";
 import { useState } from "react";
 
@@ -10,30 +11,35 @@ export type RoomPlayer = {
 
 export const EnterRoom = () => {
   const [roomPlayer, setRoomPlayer] = useState<RoomPlayer | undefined>({});
-  const { players, joinRoom, gameState } = usePlaying();
+  const { joinRoom } = usePlaying();
 
   return (
-    <Stack mb={8}>
-      <input
-        value={roomPlayer?.aliasName}
-        onChange={(e) =>
-          setRoomPlayer({ ...roomPlayer, aliasName: e.target.value })
-        }
-        placeholder="Enter alias name"
-      />
-      <input
-        value={roomPlayer?.roomId}
-        onChange={(e) =>
-          setRoomPlayer({ ...roomPlayer, roomId: e.target.value })
-        }
-        placeholder="Enter room ID"
-      />
+    <Stack gap={4} width="full" maxW={400}>
+      <Stack textAlign="center" mb={8} mt={8}>
+        <Heading fontSize={36}>JokenPo</Heading>
+        <Text fontSize={16}>Pedra, Papel e Tesoura</Text>
+      </Stack>
+      <Field label="Room ID">
+        <Input
+          placeholder="4456"
+          value={roomPlayer?.aliasName}
+          onChange={(e) =>
+            setRoomPlayer({ ...roomPlayer, aliasName: e.target.value })
+          }
+        />
+      </Field>
+
+      <Field label="Your Name">
+        <Input
+          placeholder="Jhon Snow"
+          value={roomPlayer?.roomId}
+          onChange={(e) =>
+            setRoomPlayer({ ...roomPlayer, roomId: e.target.value })
+          }
+        />
+      </Field>
+
       <Button onClick={() => joinRoom(roomPlayer)}>Join Room</Button>
-
-      <p>STATUS:{gameState}</p>
-
-      <p>PLAYERS: {JSON.stringify(players)}</p>
-      <p>Room details: {JSON.stringify(roomPlayer)}</p>
     </Stack>
   );
 };
