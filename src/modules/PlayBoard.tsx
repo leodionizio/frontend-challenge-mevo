@@ -32,7 +32,7 @@ export const PlayBoard = () => {
       <Spacer marginY={2} />
 
       <Score />
-      <Spacer my={8} />
+      <Spacer my={4} />
 
       <Stack paddingX={4} width="full">
         {!alreadyPlayed && <ElementsSelect play={play} />}

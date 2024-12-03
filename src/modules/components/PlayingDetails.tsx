@@ -40,22 +40,26 @@ export const PlayingDetails = ({ onPlayAgain }: PlayingDetailsProps) => {
         ))}
       </Flex>
 
-      <Text textTransform="uppercase" fontWeight="semibold" fontSize={26}>
-        {loading ? (
-          <>
+      <Stack my={4}>
+        {loading && (
+          <Text textTransform="uppercase" fontWeight="semibold" fontSize={26}>
             Waiting
             <br /> all players play...
-          </>
-        ) : (
-          <>
-            {players?.map((player) => (
-              <span key={player.id}>
-                {player.name} played {player.element}
-              </span>
-            ))}
-          </>
+          </Text>
         )}
-      </Text>
+
+        {!loading &&
+          players?.map((player) => (
+            <Text
+              textTransform="uppercase"
+              fontWeight="semibold"
+              fontSize={18}
+              key={player.id}
+            >
+              {player.name} played {player.element}
+            </Text>
+          ))}
+      </Stack>
 
       {gameState === "gameOver" && (
         <Stack textAlign="center">
@@ -74,6 +78,8 @@ export const PlayingDetails = ({ onPlayAgain }: PlayingDetailsProps) => {
             bg="#2980B9"
             color="white"
             textTransform="uppercase"
+            fontSize={20}
+            mt={2}
           >
             Play Again
           </Button>

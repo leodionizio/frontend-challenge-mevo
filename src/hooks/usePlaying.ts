@@ -6,7 +6,7 @@ import { io } from "socket.io-client";
 import { useNavigate } from "react-router";
 import { MeContext } from "contexts/meContext";
 
-const socket = io("http://localhost:3001");
+const socket = io("http://192.168.0.126:3001");
 
 const usePlaying = () => {
   const navigate = useNavigate();

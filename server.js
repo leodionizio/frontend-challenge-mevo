@@ -57,19 +57,21 @@ io.on("connection", (socket) => {
       let result = "Draw!";
 
       if (
-        (player1.element === "rock" && player2.element === "scizor") ||
-        (player1.element === "scizor" && player2.element === "paper") ||
-        (player1.element === "paper" && player2.element === "rock")
+        (player1?.element === "rock" && player2?.element === "scizor") ||
+        (player1?.element === "scizor" && player2?.element === "paper") ||
+        (player1?.element === "paper" && player2?.element === "rock")
       ) {
         result = `${player1.name} win!`;
+        player1.score += 1;
       }
 
       if (
-        (player2.element === "rock" && player1.element === "scizor") ||
-        (player2.element === "scizor" && player1.element === "paper") ||
-        (player2.element === "paper" && player1.element === "rock")
+        (player2?.element === "rock" && player1?.element === "scizor") ||
+        (player2?.element === "scizor" && player1?.element === "paper") ||
+        (player2?.element === "paper" && player1?.element === "rock")
       ) {
         result = `${player2.name} win!`;
+        player2.score += 1;
       }
 
       io.to(roomId).emit("gameOver", { result, elements: room.players });

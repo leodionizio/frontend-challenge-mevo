@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Card, Flex, Heading, Text } from "@chakra-ui/react";
+import { Card, Flex, Heading, Stack, Text } from "@chakra-ui/react";
 import { PlayContext } from "contexts/playContext";
 import { MeContext } from "contexts/meContext";
 
@@ -15,14 +15,14 @@ export const Score = () => {
         </Heading>
       </Card.Header>
       <Card.Body textAlign="center" pt={0}>
-        <Flex width="full" justifyContent="space-around">
+        <Stack width="full" gap={1} mt={2}>
           {players.map((player) => (
-            <Text fontSize={36} fontWeight="bold" key={player.id}>
+            <Text fontSize={24} fontWeight="bold" key={player.id}>
               {player.name}
               {isMe(player.name) && "(you)"}: {player.score}
             </Text>
           ))}
-        </Flex>
+        </Stack>
       </Card.Body>
     </Card.Root>
   );
