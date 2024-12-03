@@ -1,46 +1,82 @@
-# Getting Started with Create React App
+# Jokenpo TS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Um simples jogo de **Jokenpo (pedra, papel e tesoura)**, construído com **React**, **TypeScript** e suporte a multiplayer via **Socket.IO**.
 
-## Available Scripts
+## 🚀 Funcionalidades
 
-In the project directory, you can run:
+- Interface responsiva e moderna com **Chakra UI**.
+- Suporte multiplayer em tempo real com **Socket.IO**.
+- Testes incluídos com **Jest** e **Testing Library**.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🛠️ Tecnologias
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **React** e **TypeScript** para a interface.
+- **Socket.IO** para funcionalidades multiplayer.
+- **Chakra UI** para estilização.
+- **Jest** e **Testing Library** para testes.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🧑‍💻 Como Executar
 
-### `npm run build`
+1. **Clone o repositório**:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   ```bash
+   git clone https://github.com/seu-usuario/jokenpo-ts.git
+   cd jokenpo-ts
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Instale as dependências**:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   yarn install
+   ```
 
-### `npm run eject`
+3. **Inicie o servidor e o frontend**:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   - Para iniciar o servidor:
+     ```bash
+     yarn start:server
+     ```
+   - Para iniciar o frontend:
+     ```bash
+     yarn start
+     ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. **Acesse o jogo**:
+   Abra o navegador e acesse: [http://localhost:3000](http://localhost:3000)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+---
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 🧪 Testes
 
-## Learn More
+Para executar os testes:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+yarn test
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
+
+## 📦 Scripts Disponíveis
+
+- `yarn start` - Inicia o frontend no ambiente de desenvolvimento.
+- `yarn start:server` - Inicia o servidor multiplayer.
+- `yarn build` - Compila o projeto para produção.
+- `yarn test` - Executa os testes.
+- `yarn eject` - Ejetar a configuração do CRA (use com cuidado).
+
+---
+
+## 📚 Estrutura do Projeto
+
+```plaintext
+src/
+├── components/       # Componentes reutilizáveis
+├── pages/            # Páginas do jogo
+├── contexts/         # Contextos globais
+├── hooks/            # Hooks personalizados
+├── utils/            # Funções auxiliares
+```
