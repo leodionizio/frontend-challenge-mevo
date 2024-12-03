@@ -3,7 +3,7 @@ import { CustomContextProviderProps } from "types/contextProviders";
 import { Elements } from "types/elements";
 import { PlayingResult } from "types/playing";
 
-interface LoadingContextType {
+export type PlayContextType = {
   score: number;
   setScore: Dispatch<SetStateAction<number>>;
   result: PlayingResult | undefined;
@@ -12,9 +12,9 @@ interface LoadingContextType {
   setPlayerOneElement: Dispatch<SetStateAction<Elements | undefined>>;
   playerTwoElement: Elements | undefined;
   setPlayerTwoElement: Dispatch<SetStateAction<Elements | undefined>>;
-}
+};
 
-const defaultContextValue: LoadingContextType = {
+export const defaultContextValue: PlayContextType = {
   score: 0,
   setScore: () => {},
   result: undefined,

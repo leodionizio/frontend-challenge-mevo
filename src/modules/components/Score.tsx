@@ -14,7 +14,7 @@ export const Score = () => {
       </Card.Header>
       <Card.Body textAlign="center" pt={0}>
         <Text fontSize={36} fontWeight="bold">
-          {String(score)}
+          {score}
         </Text>
       </Card.Body>
     </Card.Root>

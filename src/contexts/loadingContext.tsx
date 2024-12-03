@@ -1,12 +1,12 @@
 import { createContext, Dispatch, SetStateAction, useState } from "react";
 import { CustomContextProviderProps } from "types/contextProviders";
 
-interface LoadingContextType {
+export type LoadingContextType = {
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
-}
+};
 
-const defaultContextValue: LoadingContextType = {
+export const defaultContextValue: LoadingContextType = {
   loading: false,
   setLoading: () => {},
 };
