@@ -1,5 +1,6 @@
 const express = require("express");
 const http = require("http");
+const path = require("path");
 const { Server } = require("socket.io");
 
 const app = express();
@@ -92,6 +93,12 @@ io.on("connection", (socket) => {
       io.to(roomId).emit("roomState", rooms[roomId]);
     }
   });
+});
+
+app.use(express.static(path.join(__dirname, "build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 const PORT = 3001;
